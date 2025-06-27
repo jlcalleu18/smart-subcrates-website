@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Subcrate Creator</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <script>
+    function switchLanguage(lang) {
+      const elements = document.querySelectorAll('[data-lang]');
+      elements.forEach(el => {
+        el.style.display = el.getAttribute('data-lang') === lang ? 'block' : 'none';
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => switchLanguage("en"));
+  </script>
+</head>
+<body>
+  <div class="language-select">
+    <label for="language-dropdown">Language:</label>
+    <select id="language-dropdown" onchange="switchLanguage(this.value)">
+      <option value="en">🇺🇸 English</option>
+      <option value="es">🇪🇨 Español</option>
+    </select>
+  </div>
+
+  <header>
+    <div class="container">
+      <h1 data-lang="en">Smart Subcrate Creator</h1>
+      <h1 data-lang="es" style="display:none;">Smart Subcrate Creator</h1>
+
+      <p data-lang="en">Create Serato crates from your music folders with one click.</p>
+      <p data-lang="es" style="display:none;">Crea subcrates de Serato desde tus carpetas de música con un solo clic.</p>
+
+      <a href="link-to-your-app.zip" class="btn" data-lang="en">⬇ Download App</a>
+      <a href="link-to-your-app.zip" class="btn" data-lang="es" style="display:none;">⬇ Descargar App</a>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <h2 data-lang="en">🎬 Demo Video</h2>
+      <h2 data-lang="es" style="display:none;">🎬 Video Demostrativo</h2>
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/your_video_id" title="Demo Video" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 data-lang="en">📸 Screenshots</h2>
+      <h2 data-lang="es" style="display:none;">📸 Capturas de Pantalla</h2>
+      <img src="assets/screenshot2.png" alt="App Screenshot 1" width="300" style="margin: 1rem;">
+      <img src="assets/screenshot3.png" alt="App Screenshot 2" width="300" style="margin: 1rem;">
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 data-lang="en">🚀 Quick Start Guide</h2>
+      <h2 data-lang="es" style="display:none;">🚀 Guía Rápida</h2>
+      <ul class="guide" data-lang="en">
+        <li>Download the app</li>
+        <li>Unzip the file</li>
+        <li>Run the app (double click)</li>
+        <li>Select your Music and Subcrate folders</li>
+        <li>Click "Create Subcrates"</li>
+      </ul>
+      <ul data-lang="es" style="display:none;">
+        <li>Descarga la aplicación</li>
+        <li>Descomprime el archivo</li>
+        <li>Ejecuta la aplicación (doble clic)</li>
+        <li>Selecciona tus carpetas de Música y Subcrates</li>
+        <li>Haz clic en "Crear Subcrates"</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 data-lang="en">❓ Frequently Asked Questions</h2>
+      <h2 data-lang="es" style="display:none;">❓ Preguntas Frecuentes</h2>
+      <ul class="features" data-lang="en">
+        <li><strong>Is this safe?</strong> – Yes, it runs locally and doesn't upload your music.</li>
+        <li><strong>Does it move files?</strong> – No, it only generates .crate files.</li>
+        <li><strong>Supported OS?</strong> – Windows & macOS</li>
+        <li><strong>Do I need Serato?</strong> – You need Serato installed to use the crates.</li>
+      </ul>
+      <ul class="features" data-lang="es" style="display:none;">
+        <li><strong>¿Es seguro?</strong> – Sí, funciona localmente y no sube tu música.</li>
+        <li><strong>¿Mueve los archivos?</strong> – No, solo genera archivos .crate.</li>
+        <li><strong>Sistemas operativos compatibles</strong> – Windows y macOS</li>
+        <li><strong>¿Necesito tener Serato?</strong> – Sí, debes tener Serato instalado para usar los subcrates.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 data-lang="en">🛠️ Changelog</h2>
+      <h2 data-lang="es" style="display:none;">🛠️ Historial de Cambios</h2>
+      <ul class="features" data-lang="en">
+        <li><strong>v1.0</strong> – Initial release: drag & drop, crate creation</li>
+        <li><strong>v1.1</strong> – Added language selector (Spanish)</li>
+        <li><strong>v1.2</strong> – Added folder sorting</li>
+        <li><strong>v1.3</strong> – Now displays how many folders and songs were added</li>
+        </ul>
+      <ul class="features" data-lang="es" style="display:none;">
+        <li><strong>v1.0</strong> – Lanzamiento inicial: arrastrar y soltar, creación de subcrates</li>
+        <li><strong>v1.1</strong> – Se agregó selector de idioma (español)</li>
+        <li><strong>v1.2</strong> – Se agregó ordenamiento de carpetas</li>
+        <li><strong>v1.3</strong> – Ahora muestra cuántas carpetas y canciones fueron agregadas</li>
+        </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 data-lang="en">📬 Contact</h2>
+      <h2 data-lang="es" style="display:none;">📬 Contacto</h2>
+      <p data-lang="en">Have feedback or questions? <a href="mailto:dj.jordy750@gmail.com">Email me</a></p>
+      <p data-lang="es" style="display:none;">¿Tienes preguntas o comentarios? <a href="mailto:dj.jordy750@gmail.com">Escríbeme</a></p>
+    </div>
+  </section>
+
+  <footer>
+    <p>🔥 Built for DJs, by DJ Jordy 🎧</p>
+  </footer>
+</body>
+</html>
