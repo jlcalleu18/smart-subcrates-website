@@ -2,144 +2,354 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Smart Subcrate App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Smart Subcrates App — Create Serato Crates Instantly</title>
+  <meta name="description" content="Turn your music folders into Serato-ready crates in seconds. Works on macOS (Apple Silicon + Intel) and Windows. One-time purchase, lifetime updates." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="/assets/app_icon.png" />
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <script>
-    function switchLanguage(lang) {
-      const elements = document.querySelectorAll('[data-lang]');
-      elements.forEach(el => {
-        el.style.display = el.getAttribute('data-lang') === lang ? 'block' : 'none';
-      });
-    }
+  <meta property="og:title" content="Smart Subcrates App" />
+  <meta property="og:description" content="Create Serato crates from your folders with one click. macOS + Windows." />
+  <meta property="og:image" content="/assets/og-image.jpg" />
+  <meta property="og:type" content="website" />
+  <script defer src="script.js"></script>
 
-    document.addEventListener("DOMContentLoaded", () => switchLanguage("en"));
-  </script>
 </head>
 <body>
-  <div class="language-select">
-    <label for="language-dropdown">Language:</label>
-    <select id="language-dropdown" onchange="switchLanguage(this.value)">
-      <option value="en">🇺🇸 English</option>
-      <option value="es">🇪🇨 Español</option>
-    </select>
-  </div>
+  <header class="hero">
+    <div class="container inner">
+      <div style="display:flex;gap:12px;align-items:center">
+        <img src="/assets/app_icon.png" alt="Smart Subcrates icon" width="50" height="50" style="border-radius:8px"/>
+        <strong>Smart Subcrates</strong>
+      </div>
+      <nav>
+        <select id="language-dropdown" class="lang" onchange="switchLanguage(this.value)">
+          <option value="en">🇺🇸 English</option>
+          <option value="es">🇪🇨 Español</option>
+        </select>
+        <a data-store href="https://store.smartsubcrates.com/buy/6cca9f2a-0b97-4b3b-bf1f-de6168853923" class="btn top-cta" data-lang="en">🛒 Buy Now — $39.99</a>
+        <a data-store href="https://store.smartsubcrates.com/buy/6cca9f2a-0b97-4b3b-bf1f-de6168853923" class="btn top-cta" data-lang="es" style="display:none">🛒 Comprar — $39.99</a>
+      </nav>
+    </div>
 
-  <header>
-    <div class="container">
-      <h1 data-lang="en">Smart Subcrate App</h1>
-      <h1 data-lang="es" style="display:none;">Smart Subcrate App</h1>
+    <div class="hero-slab">
+      <div class="container hero-grid">
+        <div>
+          <h1 class="title" data-lang="en">Turn your music folders into Serato‑ready crates in seconds 🎶</h1>
+          <h1 class="title" data-lang="es" style="display:none">Convierte tus carpetas de música en subcrates para Serato en segundos 🎶</h1>
+          
+          <p class="subtitle" data-lang="en">
+            Works on macOS (<b>Apple Silicon</b> + <b>Intel</b>) and <b>Windows</b>.  <br>
+            Supports macOS Catalina (10.15) and newer, Windows 10 and newer.  <br>
+            One-time purchase, lifetime updates.
+          </p>
 
-      <p data-lang="en">Create Serato crates from your music folders with one click.</p>
-      <p data-lang="es" style="display:none;">Crea subcrates de Serato desde tus carpetas de música con un solo clic.</p>
+          <p class="subtitle" data-lang="es" style="display:none">
+            Funciona en macOS (<b>Apple Silicon</b> + <b>Intel</b>) y <b>Windows</b>.  <br>
+            Compatible con macOS Catalina (10.15) y versiones posteriores, Windows 10 y posteriores. <br>
+            Pago único, actualizaciones de por vida.
+          </p>
+          <div class="badge-list">
+            <span class="badge">🔒 100% local — no uploads</span>
+            <span class="badge">⚡ Auto‑updates crates</span>
+            <span class="badge">🧩 Serato DJ compatible</span>
+          </div>
 
-      <a href="https://store.smartsubcrates.com" class="btn" data-lang="en">⬇ Download App</a>
-      <p data-lang="en" style="margin-top: 0.5rem; font-size: 0.9rem; color: red;">
-        ⚠️ Currently works only on Macs with Apple Silicon chips (M1/M2/M3). We are working on compatibility for Intel Macs.
-      </p>
+          <div class="cta-group">
+            <a data-store href="https://store.smartsubcrates.com/buy/6cca9f2a-0b97-4b3b-bf1f-de6168853923" class="btn" data-lang="en">🛒 Buy Now — $39.99</a>
+            <a data-store href="https://store.smartsubcrates.com/buy/6cca9f2a-0b97-4b3b-bf1f-de6168853923" class="btn" data-lang="es" style="display:none">🛒 Comprar — $39.99</a>
+            <a href="#demo" class="btn secondary" data-lang="en">▶ Watch Demo</a>
+            <a href="#demo" class="btn secondary" data-lang="es" style="display:none">▶ Ver Demo</a>
+          </div>
+        </div>
+        <div class="card carousel">
+          <div class="carousel-wrapper">
+            <img class="screenshot active" src="/assets/screenshot1.png" alt="Smart Subcrates App screenshot 1" />
+            <img class="screenshot" src="/assets/screenshot2.png" alt="Smart Subcrates App screenshot 2" />
+            <img class="screenshot" src="/assets/screenshot3.png" alt="Smart Subcrates App screenshot 3" />
+            <img class="screenshot" src="/assets/screenshot4.png" alt="Smart Subcrates App screenshot 4" />
+            <img class="screenshot" src="/assets/screenshot5.png" alt="Smart Subcrates App screenshot 5" />
+          </div>
 
-      <a href="https://store.smartsubcrates.com" class="btn" data-lang="es" style="display:none;">⬇ Descargar App</a>
-      <p data-lang="es" style="display:none; margin-top: 0.5rem; font-size: 0.9rem; color: red;">
-        ⚠️ Actualmente funciona solo en Macs con chips Apple Silicon (M1/M2/M3). Estamos trabajando en la compatibilidad para Macs con procesadores Intel.
-      </p>
+          <div class="carousel-controls">
+            <button class="prev" aria-label="Previous">⟨</button>
+            <button class="next" aria-label="Next">⟩</button>
+          </div>
+
+          <div class="pill" style="margin-top:12px" data-lang="en">
+            📦 Purchase includes: macOS (Apple Silicon + Intel) & Windows installers
+          </div>
+          <div class="pill" style="margin-top:12px;display:none" data-lang="es">
+            📦 La compra incluye: instaladores para macOS (Apple Silicon + Intel) y Windows
+          </div>
+        </div>
+      </div>
     </div>
   </header>
 
-  <section class="section">
-    <div class="container">
-      <h2 data-lang="en">🎬 Demo Video</h2>
-      <h2 data-lang="es" style="display:none;">🎬 Video Demostrativo</h2>
-      <div class="video-wrapper">
-        <iframe 
-          src="https://www.youtube.com/embed/QGoq0EtGMAw" 
-          title="Demo Video" 
-          frameborder="0" 
-          allowfullscreen>
-        </iframe>
+  <main>
+    <section id="demo">
+      <div class="container">
+        <h2 data-lang="en">🎬 Demo & Installation</h2>
+        <h2 data-lang="es" style="display:none">🎬 Demostración e Instalación</h2>
+
+        <div class="grid cols-2 demo-install">
+          <!-- Demo Video -->
+          <div>
+            <h3 data-lang="en">See it in Action</h3>
+            <h3 data-lang="es" style="display:none">Véelo en Acción</h3>
+            <div class="video-wrapper">
+              <iframe 
+                src="https://www.youtube.com/embed/QGoq0EtGMAw" 
+                title="Demo Video" 
+                frameborder="0" 
+                allowfullscreen>
+              </iframe>
+            </div>
+          </div>
+
+          <!-- Installation Video -->
+          <div>
+            <h3 data-lang="en">How to Install</h3>
+            <h3 data-lang="es" style="display:none">Cómo Instalar</h3>
+            <div class="video-wrapper">
+              <iframe 
+                src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                title="Installation Guide" 
+                frameborder="0" 
+                allowfullscreen>
+              </iframe>
+            </div>
+            <p class="muted" data-lang="en" style="margin-top:10px">
+              Full installation guide video coming soon.
+            </p>
+            <p class="muted" data-lang="es" style="display:none; margin-top:10px">
+              El video de la guía de instalación estará disponible pronto.
+            </p>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section">
-    <div class="container">
-      <h2 data-lang="en">📸 Screenshots</h2>
-      <h2 data-lang="es" style="display:none;">📸 Capturas de Pantalla</h2>
-      <img src="assets/screenshot2.png" alt="App Screenshot 1" width="300" style="margin: 1rem;">
-      <img src="assets/screenshot3.png" alt="App Screenshot 2" width="300" style="margin: 1rem;">
-    </div>
-  </section>
+    <section>
+      <div class="container">
+        <h2 data-lang="en">✨ Features</h2>
+        <h2 data-lang="es" style="display:none">✨ Funciones</h2>
+        <div class="grid cols-3">
+          <div class="feature"><h3>One‑Click Crates</h3><p class="muted" data-lang="en">Select your music folder and generate Serato‑ready subcrates.</p><p class="muted" data-lang="es" style="display:none">Selecciona tu carpeta de música y genera subcrates listos para Serato.</p></div>
+          <div class="feature"><h3>Auto‑Update</h3><p class="muted" data-lang="en">Adds new tracks and cleans removed ones with update mode.</p><p class="muted" data-lang="es" style="display:none">Agrega canciones nuevas y limpia las eliminadas con el modo actualización.</p></div>
+          <div class="feature"><h3>100% Local</h3><p class="muted" data-lang="en">Your library stays on your machine — nothing is uploaded.</p><p class="muted" data-lang="es" style="display:none">Tu música se queda en tu equipo — nada se sube a internet.</p></div>
+          <div class="feature"><h3>macOS + Windows</h3><p class="muted" data-lang="en">Universal support: Apple Silicon, Intel, and Windows installers included.</p><p class="muted" data-lang="es" style="display:none">Soporte universal: Apple Silicon, Intel y Windows incluidos.</p></div>
+          <div class="feature"><h3>Fast & Lightweight</h3><p class="muted" data-lang="en">Built for speed so you prep faster and play more.</p><p class="muted" data-lang="es" style="display:none">Hecho para velocidad: prepara más rápido y toca más.</p></div>
+          <div class="feature"><h3>Simple UI</h3><p class="muted" data-lang="en">Clean interface with dark mode visuals.</p><p class="muted" data-lang="es" style="display:none">Interfaz limpia con visuales estilo modo oscuro.</p></div>
+        </div>
+      </div>
+    </section>
 
-  <section class="section">
-    <div class="container">
-      <h2 data-lang="en">🚀 Quick Start Guide</h2>
-      <h2 data-lang="es" style="display:none;">🚀 Guía Rápida</h2>
-      <ul class="guide" data-lang="en">
-        <li>Download the app</li>
-        <li>Unzip the file</li>
-        <li>Run the app (double click)</li>
-        <li>Select your Music and Subcrate folders</li>
-        <li>Click "Create Subcrates"</li>
-      </ul>
-      <ul data-lang="es" style="display:none;">
-        <li>Descarga la aplicación</li>
-        <li>Descomprime el archivo</li>
-        <li>Ejecuta la aplicación (doble clic)</li>
-        <li>Selecciona tus carpetas de Música y Subcrates</li>
-        <li>Haz clic en "Crear Subcrates"</li>
-      </ul>
-    </div>
-  </section>
+    <section>
+      <div class="container">
+        <h2 data-lang="en">🚀 Quick Start</h2>
+        <h2 data-lang="es" style="display:none">🚀 Guía Rápida</h2>
 
-  <section class="section">
-    <div class="container">
-      <h2 data-lang="en">❓ Frequently Asked Questions</h2>
-      <h2 data-lang="es" style="display:none;">❓ Preguntas Frecuentes</h2>
-      <ul class="features" data-lang="en">
-        <li><strong>Is this safe?</strong> – Yes, it runs locally and doesn't upload your music.</li>
-        <li><strong>Does it move files?</strong> – No, it only generates .crate files.</li>
-        <li><strong>Supported OS?</strong> – Windows & macOS</li>
-        <li><strong>Do I need Serato?</strong> – You need Serato installed to use the crates.</li>
-      </ul>
-      <ul class="features" data-lang="es" style="display:none;">
-        <li><strong>¿Es seguro?</strong> – Sí, funciona localmente y no sube tu música.</li>
-        <li><strong>¿Mueve los archivos?</strong> – No, solo genera archivos .crate.</li>
-        <li><strong>Sistemas operativos compatibles</strong> – Windows y macOS</li>
-        <li><strong>¿Necesito tener Serato?</strong> – Sí, debes tener Serato instalado para usar los subcrates.</li>
-      </ul>
-    </div>
-  </section>
+        <div class="grid cols-3">
 
-  <section class="section">
-    <div class="container">
-      <h2 data-lang="en">🛠️ Changelog</h2>
-      <h2 data-lang="es" style="display:none;">🛠️ Historial de Cambios</h2>
-      <ul class="features" data-lang="en">
-        <li><strong>v1.0</strong> – Initial release: drag & drop, crate creation</li>
-        <li><strong>v1.1</strong> – Added language selector (Spanish)</li>
-        <li><strong>v1.2</strong> – Added folder sorting</li>
-        <li><strong>v1.3</strong> – Now displays how many folders and songs were added</li>
-        </ul>
-      <ul class="features" data-lang="es" style="display:none;">
-        <li><strong>v1.0</strong> – Lanzamiento inicial: arrastrar y soltar, creación de subcrates</li>
-        <li><strong>v1.1</strong> – Se agregó selector de idioma (español)</li>
-        <li><strong>v1.2</strong> – Se agregó ordenamiento de carpetas</li>
-        <li><strong>v1.3</strong> – Ahora muestra cuántas carpetas y canciones fueron agregadas</li>
-        </ul>
-    </div>
-  </section>
+          <!-- Step 1 -->
+          <div class="feature">
+            <h3 data-lang="en">1) Download & Install</h3>
+            <h3 data-lang="es" style="display:none">1) Descarga e Instala</h3>
+            <p class="muted" data-lang="en">
+              Download your installer (macOS Intel, Apple Silicon, or Windows).  
+              Run the app and enter the license key you received by email.  
+              Wait until your license is validated.
+            </p>
+            <p class="muted" data-lang="es" style="display:none">
+              Descarga tu instalador (macOS Intel, Apple Silicon o Windows).  
+              Ejecuta la aplicación e ingresa la licencia que recibiste por correo.  
+              Espera hasta que tu licencia sea validada.
+            </p>
+          </div>
 
-  <section class="section">
-    <div class="container">
-      <h2 data-lang="en">📬 Contact</h2>
-      <h2 data-lang="es" style="display:none;">📬 Contacto</h2>
-      <p data-lang="en">Have feedback or questions? <a href="mailto:support@smartsubcrates.com">Email me</a></p>
-      <p data-lang="es" style="display:none;">¿Tienes preguntas o comentarios? <a href="mailto:support@smartsubcrates.com">Escríbeme</a></p>
-    </div>
-  </section>
+          <!-- Step 2 -->
+          <div class="feature">
+            <h3 data-lang="en">2) Choose Folders</h3>
+            <h3 data-lang="es" style="display:none">2) Elige las Carpetas</h3>
+            <p class="muted" data-lang="en">
+              Select your main Music folder and the Serato Subcrates folder.
+            </p>
+            <p class="muted" data-lang="es" style="display:none">
+              Selecciona tu carpeta principal de Música y la carpeta de Subcrates de Serato.
+            </p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="feature">
+            <h3 data-lang="en">3) Create / Update</h3>
+            <h3 data-lang="es" style="display:none">3) Crea / Actualiza</h3>
+            <p class="muted" data-lang="en">
+              Click <b>“Create”</b> for new crates or <b>“Update”</b> to sync changes automatically.
+            </p>
+            <p class="muted" data-lang="es" style="display:none">
+              Haz clic en <b>“Create”</b> para nuevos subcrates o en <b>“Update”</b> para sincronizar los cambios automáticamente.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <h2 data-lang="en">💬 What DJs Say</h2>
+        <h2 data-lang="es" style="display:none">💬 Lo que dicen los DJs</h2>
+        <div class="grid cols-3">
+          <blockquote class="testi"><p>“Saved me hours before my set. Total game changer.” — DJ Carla</p></blockquote>
+          <blockquote class="testi"><p>“Crates updated in seconds. Worth every dollar.” — DJ Flow</p></blockquote>
+          <blockquote class="testi"><p>“Simple, fast, and reliable on my M2 Mac.” — DJ Alex</p></blockquote>
+        </div>
+      </div>
+    </section>
+
+    <section class="pricing">
+      <div class="container">
+        <div class="grid cols-2">
+          <!-- Left card -->
+          <div class="card">
+            <div class="card-body">
+              <h2 data-lang="en">💵 Pricing</h2>
+              <h2 data-lang="es" style="display:none">💵 Precio</h2>
+              <p class="price-tag">$39.99</p>
+              <p class="muted" data-lang="en">One-time purchase • Lifetime updates</p>
+              <p class="muted" data-lang="es" style="display:none">Pago único • Actualizaciones de por vida</p>
+              <div class="cta-group" style="margin-top:10px">
+                <a data-store href="https://store.smartsubcrates.com/buy/6cca9f2a-0b97-4b3b-bf1f-de6168853923" class="btn" data-lang="en">🛒 Buy Now</a>
+                <a data-store href="https://store.smartsubcrates.com/buy/6cca9f2a-0b97-4b3b-bf1f-de6168853923" class="btn" data-lang="es" style="display:none">🛒 Comprar</a>
+              </div>
+              <p class="small" style="margin-top:10px" data-lang="en">Secure checkout via Lemon Squeezy.</p>
+              <p class="small" style="margin-top:10px;display:none" data-lang="es">Pago seguro con Lemon Squeezy.</p>
+            </div>
+          </div>
+
+          <!-- Right card -->
+          <div class="card">
+            <div class="card-body">
+              <h3 data-lang="en">Included Installers</h3>
+              <h3 data-lang="es" style="display:none">Instaladores Incluidos</h3>
+
+              <div class="badge-list">
+                <span class="badge"> macOS — Apple Silicon (DMG)</span>
+                <span class="badge"> macOS — Intel (DMG)</span>
+                <span class="badge">🪟 Windows (EXE)</span>
+              </div>
+
+              <p class="muted" data-lang="en">
+                You’ll receive download links for all platforms after purchase.
+              </p>
+              <p class="muted" data-lang="es" style="display:none">
+                Recibirás enlaces de descarga para todas las plataformas después de la compra.
+              </p>
+
+              <p class="small muted" data-lang="en">
+                Supports macOS Catalina (10.15+) and Windows 10+.
+              </p>
+              <p class="small muted" data-lang="es" style="display:none">
+                Compatible con macOS Catalina (10.15+) y Windows 10+.
+              </p>
+
+              <ul class="muted">
+                <li data-lang="en">7-day money back guarantee</li>
+                <li data-lang="es" style="display:none">Garantía de devolución de 7 días</li>
+                <li data-lang="en">
+                  Email support: <a href="mailto:support@smartsubcrates.com">support@smartsubcrates.com</a>
+                </li>
+                <li data-lang="es" style="display:none">
+                  Soporte por correo: <a href="mailto:support@smartsubcrates.com">support@smartsubcrates.com</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <h2 data-lang="en">❓ FAQ</h2>
+        <h2 data-lang="es" style="display:none">❓ Preguntas Frecuentes</h2>
+        <div class="grid cols-2">
+          <div class="feature">
+            <h3 data-lang="en">Does this upload my music?</h3>
+            <h3 data-lang="es" style="display:none">¿Sube mi música a internet?</h3>
+            <p class="muted" data-lang="en">No. Everything runs locally on your computer.</p>
+            <p class="muted" data-lang="es" style="display:none">No. Todo corre localmente en tu computador.</p>
+          </div>
+          <div class="feature">
+            <h3 data-lang="en">Does it move or rename files?</h3>
+            <h3 data-lang="es" style="display:none">¿Mueve o renombra archivos?</h3>
+            <p class="muted" data-lang="en">No. It only creates/updates <code>.crate</code> files for Serato.</p>
+            <p class="muted" data-lang="es" style="display:none">No. Solo crea/actualiza archivos <code>.crate</code> para Serato.</p>
+          </div>
+          <div class="feature">
+            <h3 data-lang="en">Which OS are supported?</h3>
+            <h3 data-lang="es" style="display:none">¿Qué sistemas soporta?</h3>
+            <p class="muted" data-lang="en">
+              macOS Catalina (10.15+) and newer (Intel & Apple Silicon). <br> 
+              Windows 10 and newer.
+            </p>
+            <p class="muted" data-lang="es" style="display:none">
+              macOS Catalina (10.15+) y versiones posteriores (Intel y Apple Silicon). <br> 
+              Windows 10 y posteriores.
+            </p>
+          </div>
+          <div class="feature">
+            <h3 data-lang="en">Do I need Serato installed?</h3>
+            <h3 data-lang="es" style="display:none">¿Necesito tener Serato instalado?</h3>
+            <p class="muted" data-lang="en">Yes, to use the generated crates inside Serato.</p>
+            <p class="muted" data-lang="es" style="display:none">Sí, para usar los subcrates dentro de Serato.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <h2 data-lang="en">🛠️ Changelog</h2>
+        <h2 data-lang="es" style="display:none">🛠️ Historial de Cambios</h2>
+        <div class="grid cols-2">
+          <div class="feature">
+            <h3>1.4.0 — 2025‑09‑02</h3>
+            <ul class="muted">
+              <li data-lang="en">Added support for Mac Intel + Windows installers</li>
+              <li data-lang="es" style="display:none">Se agregó soporte para instaladores de Mac Intel + Windows</li>
+              <li data-lang="en">Now includes tracks in your main folder</li>
+              <li data-lang="es" style="display:none">Ahora incluye canciones en la carpeta principal</li>
+              <li data-lang="en">Faster updates; safer deletion logic</li>
+              <li data-lang="es" style="display:none">Actualizaciones más rápidas; lógica de eliminación más segura</li>
+            </ul>
+          </div>
+          <div class="feature">
+            <h3>1.0.0 → 1.3.0</h3>
+            <ul class="muted">
+              <li data-lang="en">Initial release, language selector, folder sorting, update mode</li>
+              <li data-lang="es" style="display:none">Lanzamiento inicial, selector de idioma, ordenamiento de carpetas, modo actualización</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <footer>
-    <p>🔥 Built for DJs, by DJ Jordy 🎧</p>
+    <div class="container">
+      <div>🔥 Built for DJs, by DJ Jordy 🎧</div>
+      <div class="foot-row">
+        <a href="mailto:support@smartsubcrates.com">support@smartsubcrates.com</a>
+        <span>•</span>
+        <span data-lang="en">Secure checkout powered by Lemon Squeezy</span>
+        <span data-lang="es" style="display:none">Pago seguro con Lemon Squeezy</span>
+      </div>
+    </div>
   </footer>
 </body>
 </html>
