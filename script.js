@@ -1,4 +1,4 @@
-const STORE_URL = 'https://store.smartsubcrates.com/checkout';
+const STORE_URL = 'https://store.smartsubcrates.com/buy/6cca9f2a-0b97-4b3b-bf1f-de6168853923?embed=1';
 const VIDEO_ID  = 'QGoq0EtGMAw';
 
 function switchLanguage(lang){

@@ -116,6 +116,15 @@ nav {
   color: var(--muted);
   margin: 0 0 22px;
 }
+.badge.highlight {
+  background: #2563eb;  /* blue highlight */
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+.badge.highlight:hover {
+  background: #1d4ed8;
+}
 .badge-list {
   display: flex;
   flex-wrap: wrap;
@@ -198,7 +207,8 @@ nav {
 .carousel-controls button { 
   outline: none; 
 }
-
+.waitlist .card { border: 1px solid #e5e7eb; border-radius: 16px; }
+.waitlist .card-body { padding: 20px; }
 section {
   padding: 54px 0;
   border-bottom: 1px solid #0f1520;
