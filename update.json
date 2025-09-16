@@ -1,5 +1,10 @@
 {
-  "version": "1.3.1",
-  "download_url": "https://github.com/jlcalleu18/smart-subcrates-website/releases/download/v1.3.1/Smart_Subcrates_Installer_v1.3.1.dmg",
-  "changelog": "Initial release with basic functionality."
+  "version": "1.4.0",
+  "download_url": "https://github.com/jlcalleu18/smart-subcrates-website/releases/download/v1.4.0/SmartSubcrates-macOS-AppleSilicon-v1.4.0.dmg",
+  "downloads": {
+    "macos_Intel": "https://github.com/jlcalleu18/smart-subcrates-website/releases/download/v1.4.0/SmartSubcrates-macOS-Intel-v1.4.0.dmg",
+    "macos_AppleSilicon": "https://github.com/jlcalleu18/smart-subcrates-website/releases/download/v1.4.0/SmartSubcrates-macOS-AppleSilicon-v1.4.0.dmg",
+    "windows": ""
+  },
+  "changelog": "Added Windows installer, improved drag-and-drop on macOS, fixed minor bugs."
 }
