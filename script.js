@@ -12,7 +12,6 @@ function switchLanguage(lang){
   document.querySelectorAll('[data-lang]')
     .forEach(el => { el.style.display = el.getAttribute('data-lang') === lang ? '' : 'none'; });
   localStorage.setItem('ssc_lang', lang);
-  track('language_switch', { language: lang });
   document.documentElement.lang = lang;
   document.querySelectorAll('a[data-store]')
     .forEach(a => a.setAttribute('href', STORE_URL));
@@ -26,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const sel = document.getElementById('language-dropdown');
   if (sel) sel.value = lang;
   switchLanguage(lang);
+  if (sel) sel.addEventListener('change', () => track('language_switch', { language: sel.value }));
 
   // ✅ init carousels
   document.querySelectorAll('.carousel').forEach(carousel => {
