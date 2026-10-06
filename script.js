@@ -1,5 +1,4 @@
 const STORE_URL = 'https://store.smartsubcrates.com/buy/6cca9f2a-0b97-4b3b-bf1f-de6168853923?embed=1';
-const VIDEO_ID  = 'QGoq0EtGMAw';
 
 function switchLanguage(lang){
   document.querySelectorAll('[data-lang]')
@@ -18,9 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const sel = document.getElementById('language-dropdown');
   if (sel) sel.value = lang;
   switchLanguage(lang);
-
-  const iframe = document.getElementById('demo-video');
-  if (iframe) iframe.src = `https://www.youtube.com/embed/${VIDEO_ID}`;
 
   // ✅ init carousels
   document.querySelectorAll('.carousel').forEach(carousel => {
@@ -46,5 +42,19 @@ document.addEventListener('DOMContentLoaded', () => {
       i = (i + 1) % imgs.length;
       show(i);
     }, 3000);
+  });
+
+  // click-to-play: only load the YouTube player when the user asks for it
+  document.querySelectorAll('.video-facade').forEach(facade => {
+    facade.addEventListener('click', () => {
+      const id = facade.getAttribute('data-yt');
+      if (!id) return;
+      const frame = document.createElement('iframe');
+      frame.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+      frame.title = facade.getAttribute('data-title') || 'Video';
+      frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      frame.allowFullscreen = true;
+      facade.replaceWith(frame);
+    });
   });
 });

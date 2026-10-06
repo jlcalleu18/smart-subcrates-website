@@ -341,3 +341,60 @@ footer {
   border-radius: 999px;
   padding: 10px 14px;
 }
+
+/* Click-to-play video facade: avoids loading the YouTube player on page load */
+.video-facade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: #000;
+  cursor: pointer;
+  display: block;
+}
+.video-facade img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.video-facade .play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 68px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+}
+.video-facade:hover .play,
+.video-facade:focus-visible .play {
+  background: #ff0000;
+}
+.video-facade:focus-visible {
+  outline: 3px solid var(--brand-2);
+  outline-offset: 2px;
+}
+.video-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  background: var(--soft);
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.video-placeholder a { color: var(--brand-2); text-decoration: underline; }
