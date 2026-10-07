@@ -3,17 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Smart Subcrates App</title>
+  <title>Smart Subcrates — Auto-Create Serato Crates from Your Folders</title>
   <meta name="description" content="Turn your music folders into Serato-ready crates in seconds. For macOS 12+ (Apple Silicon + Intel). One-time purchase, lifetime updates." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="icon" href="/assets/app_icon_256.png" />
-  <link rel="stylesheet" href="style.css?v=4" />
-  <meta property="og:title" content="Smart Subcrates App" />
+  <link rel="apple-touch-icon" href="/assets/app_icon_256.png" />
+  <link rel="stylesheet" href="style.css?v=5" />
+  <link rel="canonical" href="https://www.smartsubcrates.com/" />
+  <meta property="og:title" content="Smart Subcrates — Auto-Create Serato Crates from Your Folders" />
   <meta property="og:description" content="Create Serato crates from your folders with one click. For macOS 12+." />
-  <meta property="og:image" content="/assets/og-image.jpg" />
+  <meta property="og:image" content="https://www.smartsubcrates.com/assets/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Smart Subcrates — turn your music folders into Serato-ready crates in seconds" />
+  <meta property="og:url" content="https://www.smartsubcrates.com/" />
+  <meta property="og:site_name" content="Smart Subcrates" />
   <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="es_ES" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Smart Subcrates — Auto-Create Serato Crates from Your Folders" />
+  <meta name="twitter:description" content="Create Serato crates from your folders with one click. For macOS 12+." />
+  <meta name="twitter:image" content="https://www.smartsubcrates.com/assets/og-image.jpg" />
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-19CRBSC4E8"></script>
   <script>
@@ -22,9 +35,80 @@
     gtag('js', new Date());
     gtag('config', 'G-19CRBSC4E8');
   </script>
-  <script defer src="script.js?v=4"></script>
+  <script defer src="script.js?v=5"></script>
   <script src="https://assets.lemonsqueezy.com/lemon.js" defer></script>
 
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Smart Subcrates",
+  "applicationCategory": "MultimediaApplication",
+  "applicationSubCategory": "DJ Software",
+  "operatingSystem": "macOS 12 Monterey or later",
+  "softwareVersion": "1.4.0",
+  "url": "https://www.smartsubcrates.com/",
+  "image": "https://www.smartsubcrates.com/assets/og-image.jpg",
+  "description": "Smart Subcrates turns your music folders into Serato-ready crates in seconds. It creates and updates .crate files for Serato DJ without moving, renaming or uploading any of your music.",
+  "author": {
+    "@type": "Person",
+    "name": "Jorge Calle"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "39.99",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "url": "https://www.smartsubcrates.com/"
+  },
+  "featureList": [
+    "Create Serato subcrates from a folder tree",
+    "Update crates as tracks are added or removed",
+    "Runs entirely offline \u2014 no uploads",
+    "Apple Silicon and Intel support"
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does this upload my music?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Everything runs locally on your computer."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it move or rename files?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. It only creates and updates .crate files for Serato."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which operating systems are supported?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "macOS 12 Monterey and newer, on both Intel and Apple Silicon Macs. A Windows version is coming soon."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need Serato installed?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, you need Serato DJ installed to use the generated crates."
+      }
+    }
+  ]
+}
+  </script>
 </head>
 <body>
   <header class="hero">
@@ -75,11 +159,11 @@
         </div>
         <div class="card carousel">
           <div class="carousel-wrapper">
-            <img class="screenshot active" src="/assets/screenshot1.webp" alt="Smart Subcrates App screenshot 1" width="1200" height="862" fetchpriority="high" />
-            <img class="screenshot" src="/assets/screenshot2.webp" alt="Smart Subcrates App screenshot 2" width="1200" height="862" />
-            <img class="screenshot" src="/assets/screenshot3.webp" alt="Smart Subcrates App screenshot 3" width="1200" height="858" />
-            <img class="screenshot" src="/assets/screenshot4.webp" alt="Smart Subcrates App screenshot 4" width="1200" height="862" />
-            <img class="screenshot" src="/assets/screenshot5.webp" alt="Smart Subcrates App screenshot 5" width="1200" height="708" />
+            <img class="screenshot active" src="/assets/screenshot1.webp" alt="Smart Subcrates main window with fields for the Music folder and the Serato Subcrates folder" width="1200" height="862" fetchpriority="high" />
+            <img class="screenshot" src="/assets/screenshot2.webp" alt="Smart Subcrates with a DJ music folder selected, ready to build crates" width="1200" height="862" />
+            <img class="screenshot" src="/assets/screenshot3.webp" alt="Smart Subcrates asking for confirmation before creating crates" width="1200" height="858" />
+            <img class="screenshot" src="/assets/screenshot4.webp" alt="Smart Subcrates in Spanish reporting 98 folders processed and 2,989 new tracks added" width="1200" height="862" />
+            <img class="screenshot" src="/assets/screenshot5.webp" alt="Serato DJ showing the generated subcrates for Bachata, Dancehall and Dembow with their tracks" width="1200" height="708" />
           </div>
 
           <div class="carousel-controls">
@@ -93,6 +177,7 @@
           <div class="pill" style="margin-top:12px;display:none" data-lang="es">
              Disponible ahora en macOS - Windows muy pronto.
           </div>
+        </div>
       </div>
     </div>
   </header>
@@ -385,6 +470,13 @@
   <footer>
     <div class="container">
       <div>🔥 Built for DJs, by DJ Jordy 🎧</div>
+      <div class="foot-row">
+        <a href="/privacy.html"><span data-lang="en">Privacy</span><span data-lang="es" style="display:none">Privacidad</span></a>
+        <span>&middot;</span>
+        <a href="/terms.html"><span data-lang="en">Terms</span><span data-lang="es" style="display:none">T&eacute;rminos</span></a>
+        <span>&middot;</span>
+        <a href="/refund.html"><span data-lang="en">Refunds</span><span data-lang="es" style="display:none">Reembolsos</span></a>
+      </div>
       <div class="foot-row">
         <a href="mailto:support@smartsubcrates.com">support@smartsubcrates.com</a>
         <span>•</span>
