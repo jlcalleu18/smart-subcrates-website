@@ -92,7 +92,10 @@ nav {
   gap: 8px;
   align-items: center;
   background: linear-gradient(135deg, var(--brand), var(--brand-2));
-  color: #fff;
+  /* Near-black on the bright gradient: 5.26:1 at the blue end and 10.70:1 at
+     the cyan end. White scored 3.68:1 and 1.81:1, both below the 4.5:1 AA
+     minimum for this text size. */
+  color: #0b0e12;
   border: none;
   padding: 14px 18px;
   border-radius: 14px;
@@ -106,6 +109,8 @@ nav {
 .btn.secondary {
   background: #1f2937;
   border: 1px solid #263141;
+  /* must re-assert light text: .btn is now dark-on-bright */
+  color: #fff;
 }
 .hero-slab {
   padding: 42px 0 56px;
