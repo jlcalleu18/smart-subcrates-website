@@ -1,0 +1,150 @@
+name: CI
+
+# This repo deploys to production on every push to main, and update.json is
+# read by every installed copy of the app. These checks exist because both of
+# those have already gone wrong once: a version was published with no release
+# behind it, and og:image pointed at a file that returned 404 for months.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: update.json is valid and complete
+        run: |
+          python - <<'PY'
+          import json, re, sys
+          data = json.load(open("update.json"))
+          problems = []
+
+          version = data.get("version", "")
+          if not re.fullmatch(r"\d+\.\d+\.\d+", version):
+              problems.append(f"version {version!r} is not X.Y.Z")
+
+          downloads = data.get("downloads")
+          if not isinstance(downloads, dict):
+              problems.append("downloads is missing or not an object")
+          else:
+              for key in ("macos_Intel", "macos_AppleSilicon", "windows"):
+                  if key not in downloads:
+                      problems.append(f"downloads.{key} is missing")
+
+          for problem in problems:
+              print(f"::error file=update.json::{problem}")
+          sys.exit(1 if problems else 0)
+          PY
+
+      - name: every download URL in update.json resolves
+        run: |
+          python - <<'PY'
+          import json, sys, urllib.request, urllib.error, time
+
+          data = json.load(open("update.json"))
+          urls = {}
+          if data.get("download_url"):
+              urls["download_url"] = data["download_url"]
+          for key, value in (data.get("downloads") or {}).items():
+              if value:
+                  urls[f"downloads.{key}"] = value
+
+          failed = []
+          for name, url in urls.items():
+              ok = False
+              for attempt in range(3):
+                  try:
+                      request = urllib.request.Request(url, method="HEAD")
+                      with urllib.request.urlopen(request, timeout=30) as response:
+                          if response.status < 400:
+                              ok = True
+                              break
+                  except urllib.error.HTTPError as exc:
+                      if exc.code < 400:
+                          ok = True
+                          break
+                  except Exception:
+                      pass
+                  time.sleep(3)
+              print(f"{'ok  ' if ok else 'FAIL'} {name}: {url}")
+              if not ok:
+                  failed.append(name)
+
+          for name in failed:
+              print(f"::error file=update.json::{name} does not resolve — "
+                    "every installed app would be offered a download that 404s")
+          sys.exit(1 if failed else 0)
+          PY
+
+      - name: pages parse and referenced assets exist
+        run: |
+          python - <<'PY'
+          import glob, os, re, sys
+          from html.parser import HTMLParser
+
+          VOID = {"meta", "link", "img", "br", "hr", "input", "source", "area", "col"}
+
+          class Checker(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.stack = []
+              def handle_starttag(self, tag, attrs):
+                  if tag not in VOID:
+                      self.stack.append(tag)
+              def handle_endtag(self, tag):
+                  if self.stack and self.stack[-1] == tag:
+                      self.stack.pop()
+                  elif tag in self.stack:
+                      self.stack.remove(tag)
+
+          problems = []
+          for path in sorted(glob.glob("*.html")):
+              html = open(path, encoding="utf-8").read()
+
+              checker = Checker()
+              checker.feed(html)
+              if checker.stack:
+                  problems.append(f"{path}: unclosed tags {checker.stack}")
+
+              # Local assets referenced with a root-relative path must exist.
+              for ref in set(re.findall(r'(?:src|href|content)="(/[^"]+)"', html)):
+                  ref = ref.split("?")[0].split("#")[0]
+                  if ref.startswith("//") or not ref:
+                      continue
+                  if not os.path.exists(ref.lstrip("/")):
+                      problems.append(f"{path}: references missing file {ref}")
+
+              # og:image must be absolute: a relative one yields no preview.
+              for url in re.findall(r'property="og:image" content="([^"]+)"', html):
+                  if not url.startswith("http"):
+                      problems.append(f"{path}: og:image must be an absolute URL, got {url}")
+
+          for problem in problems:
+              print(f"::error::{problem}")
+          print("checked:", ", ".join(sorted(glob.glob("*.html"))))
+          sys.exit(1 if problems else 0)
+          PY
+
+      - name: sitemap and robots are well formed
+        run: |
+          python - <<'PY'
+          import sys, xml.dom.minidom
+          xml.dom.minidom.parse("sitemap.xml")
+          robots = open("robots.txt", encoding="utf-8").read()
+          if "Sitemap:" not in robots:
+              print("::error file=robots.txt::robots.txt does not point at the sitemap")
+              sys.exit(1)
+          print("sitemap.xml parses; robots.txt references it")
+          PY
+
+      - name: javascript parses
+        run: node --check script.js && echo "script.js OK"
