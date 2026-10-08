@@ -142,6 +142,21 @@ def point_language_picker(html: str, other_url: str, keep: str) -> str:
     return html[: old.start()] + new + html[old.end():]
 
 
+def strip_lang_markers(html: str) -> str:
+    """Remove every data-lang attribute from the generated page.
+
+    script.js hides any [data-lang] element that does not match the selected
+    language. On a Spanish-only page every element is data-lang="es", so a
+    visitor whose saved preference was "en" had the entire page hidden — the
+    rendered result was a blank layout with only the untagged badges showing.
+    Caught by looking at the page, not by parsing it.
+
+    With the markers gone there is nothing for the toggle to act on, which is
+    correct: language is chosen by URL here, not by a client-side switch.
+    """
+    return re.sub(r'\s*data-lang="(?:en|es)"', "", html)
+
+
 def build() -> str:
     html = SOURCE.read_text(encoding="utf-8")
     html = drop_english_blocks(html)
@@ -150,6 +165,7 @@ def build() -> str:
     html = add_hreflang(html, f"{SITE}/es/")
     html = fix_asset_paths(html)
     html = point_language_picker(html, "/", keep="es")
+    html = strip_lang_markers(html)
     header = ("<!-- GENERATED from index.html by tools/build-es.py — do not edit. "
               "Edit index.html and re-run the script. -->\n")
     return header + html
