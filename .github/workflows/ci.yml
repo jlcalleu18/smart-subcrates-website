@@ -148,3 +148,31 @@ jobs:
 
       - name: javascript parses
         run: node --check script.js && echo "script.js OK"
+
+      - name: store links agree with script.js
+        # The checkout URL is repeated in the markup on purpose: it is the
+        # fallback when JavaScript does not run. Duplication is fine, drift is
+        # not — a stale copy would sell the wrong product.
+        run: |
+          python - <<'PY'
+          import re, sys
+
+          js = open("script.js", encoding="utf-8").read()
+          canonical = re.search(r"const STORE_URL\s*=\s*'([^']+)'", js).group(1)
+
+          html = open("index.html", encoding="utf-8").read()
+          found = set(re.findall(r'<a data-store href="([^"]+)"', html))
+
+          print("script.js:", canonical)
+          for url in sorted(found):
+              print(("  ok   " if url == canonical else "  WRONG") + " " + url)
+
+          wrong = found - {canonical}
+          if wrong:
+              print("::error file=index.html::a data-store link does not match "
+                    "STORE_URL in script.js")
+              sys.exit(1)
+          if not found:
+              print("::error file=index.html::no data-store links found")
+              sys.exit(1)
+          PY
