@@ -176,3 +176,9 @@ jobs:
               print("::error file=index.html::no data-store links found")
               sys.exit(1)
           PY
+
+      - name: es/index.html is in step with index.html
+        # The Spanish page is generated. If someone edits index.html and
+        # forgets to regenerate, the two drift — exactly how the changelog
+        # section drifted from update.json.
+        run: python3 tools/build-es.py --check
