@@ -53,6 +53,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 3000);
   });
 
+  // lemon.js reports the $0 waitlist checkout as a purchase like any other.
+  // Left alone, a free signup counts as a conversion and Google Ads learns to
+  // chase giveaways instead of sales. Zero-value purchases are rewritten into
+  // the lead event they really are.
+  (function filterZeroValuePurchases() {
+    const original = window.gtag;
+    if (typeof original !== 'function') return;
+    window.gtag = function (command, name, params) {
+      if (command === 'event' && name === 'purchase' &&
+          params && Number(params.value) === 0) {
+        return original.call(this, 'event', 'waitlist_signup', params);
+      }
+      return original.apply(this, arguments);
+    };
+  })();
+
   // click-to-play: only load the YouTube player when the user asks for it
   document.querySelectorAll('.video-facade').forEach(facade => {
     facade.addEventListener('click', () => {
@@ -114,8 +130,16 @@ document.addEventListener('DOMContentLoaded', () => {
             quantity: 1
           }]
         };
-        // The Windows waitlist is a $0 checkout, so it is a lead, not a sale.
-        track(value === 0 ? 'waitlist_signup' : 'purchase', params);
+        // Do NOT fire 'purchase' here. lemon.js already forwards Lemon
+        // Squeezy's own GA.Purchase straight to gtag, so firing it again
+        // would record every sale twice and double the revenue figure — the
+        // exact number used to judge whether ad spend pays for itself.
+        //
+        // The $0 Windows waitlist goes through the same overlay, so it is
+        // tagged separately here as the lead it actually is.
+        if (value === 0) {
+          track('waitlist_signup', params);
+        }
       }
     });
   })(0);
