@@ -18,13 +18,21 @@ function switchLanguage(lang){
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // language + video
-  const saved = localStorage.getItem('ssc_lang');
-  const sys = navigator.language && navigator.language.startsWith('es') ? 'es' : 'en';
-  const lang = saved || sys || 'en';
   const sel = document.getElementById('language-dropdown');
-  if (sel) sel.value = lang;
-  switchLanguage(lang);
+
+  // A generated single-language page (/es/) carries no [data-lang] markers.
+  // Running the toggle there hid the entire page for anyone whose saved
+  // preference was the other language, and overwrote <html lang> and the
+  // dropdown. On those pages the language is the URL, so leave it alone.
+  const isSingleLanguagePage = document.querySelectorAll('[data-lang]').length === 0;
+
+  if (!isSingleLanguagePage) {
+    const saved = localStorage.getItem('ssc_lang');
+    const sys = navigator.language && navigator.language.startsWith('es') ? 'es' : 'en';
+    const lang = saved || sys || 'en';
+    if (sel) sel.value = lang;
+    switchLanguage(lang);
+  }
   if (sel) sel.addEventListener('change', () => track('language_switch', { language: sel.value }));
 
   // ✅ init carousels

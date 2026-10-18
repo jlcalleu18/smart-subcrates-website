@@ -8,7 +8,7 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [main, release/next]
   workflow_dispatch:
 
 jobs:
@@ -39,6 +39,64 @@ jobs:
               for key in ("macos_Intel", "macos_AppleSilicon", "windows"):
                   if key not in downloads:
                       problems.append(f"downloads.{key} is missing")
+
+          for problem in problems:
+              print(f"::error file=update.json::{problem}")
+          sys.exit(1 if problems else 0)
+          PY
+
+      - name: published downloads match their checksums
+        # The feed reaches every installed app, and the likeliest failure is
+        # our own upload: a truncated file, or the Intel build published
+        # under the Apple Silicon name. That has happened once.
+        #
+        # The desktop app opens the download in a browser and never sees the
+        # file, so it cannot check this itself. Here is where it gets checked.
+        run: |
+          python - <<'PY'
+          import hashlib, json, sys, urllib.request
+
+          data = json.load(open("update.json"))
+          checksums = data.get("sha256") or {}
+          downloads = data.get("downloads") or {}
+
+          if not checksums:
+              print("::warning file=update.json::no sha256 block; a bad upload "
+                    "would reach customers unnoticed")
+              sys.exit(0)
+
+          problems = []
+          for key, expected in checksums.items():
+              url = (downloads.get(key) or "").strip()
+              if not url:
+                  problems.append(f"sha256.{key} has no matching downloads.{key}")
+                  continue
+              if len(expected) != 64 or not all(c in "0123456789abcdef" for c in expected.lower()):
+                  problems.append(f"sha256.{key} is not a sha256 digest")
+                  continue
+
+              digest = hashlib.sha256()
+              try:
+                  with urllib.request.urlopen(url, timeout=120) as response:
+                      for block in iter(lambda: response.read(1024 * 1024), b""):
+                          digest.update(block)
+              except Exception as exc:
+                  problems.append(f"could not download {key}: {type(exc).__name__}")
+                  continue
+
+              actual = digest.hexdigest()
+              if actual != expected.lower():
+                  problems.append(
+                      f"{key} does not match: feed says {expected[:16]}…, "
+                      f"the published file is {actual[:16]}…")
+              else:
+                  print(f"{key}: matches ({actual[:16]}…)")
+
+          # Anything published without a checksum is worth saying out loud.
+          for key, url in downloads.items():
+              if url and key not in checksums:
+                  print(f"::warning file=update.json::downloads.{key} has no "
+                        f"sha256 entry")
 
           for problem in problems:
               print(f"::error file=update.json::{problem}")
@@ -148,3 +206,37 @@ jobs:
 
       - name: javascript parses
         run: node --check script.js && echo "script.js OK"
+
+      - name: store links agree with script.js
+        # The checkout URL is repeated in the markup on purpose: it is the
+        # fallback when JavaScript does not run. Duplication is fine, drift is
+        # not — a stale copy would sell the wrong product.
+        run: |
+          python - <<'PY'
+          import re, sys
+
+          js = open("script.js", encoding="utf-8").read()
+          canonical = re.search(r"const STORE_URL\s*=\s*'([^']+)'", js).group(1)
+
+          html = open("index.html", encoding="utf-8").read()
+          found = set(re.findall(r'<a data-store href="([^"]+)"', html))
+
+          print("script.js:", canonical)
+          for url in sorted(found):
+              print(("  ok   " if url == canonical else "  WRONG") + " " + url)
+
+          wrong = found - {canonical}
+          if wrong:
+              print("::error file=index.html::a data-store link does not match "
+                    "STORE_URL in script.js")
+              sys.exit(1)
+          if not found:
+              print("::error file=index.html::no data-store links found")
+              sys.exit(1)
+          PY
+
+      - name: es/index.html is in step with index.html
+        # The Spanish page is generated. If someone edits index.html and
+        # forgets to regenerate, the two drift — exactly how the changelog
+        # section drifted from update.json.
+        run: python3 tools/build-es.py --check
