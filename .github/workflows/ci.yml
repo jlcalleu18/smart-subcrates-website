@@ -45,6 +45,64 @@ jobs:
           sys.exit(1 if problems else 0)
           PY
 
+      - name: published downloads match their checksums
+        # The feed reaches every installed app, and the likeliest failure is
+        # our own upload: a truncated file, or the Intel build published
+        # under the Apple Silicon name. That has happened once.
+        #
+        # The desktop app opens the download in a browser and never sees the
+        # file, so it cannot check this itself. Here is where it gets checked.
+        run: |
+          python - <<'PY'
+          import hashlib, json, sys, urllib.request
+
+          data = json.load(open("update.json"))
+          checksums = data.get("sha256") or {}
+          downloads = data.get("downloads") or {}
+
+          if not checksums:
+              print("::warning file=update.json::no sha256 block; a bad upload "
+                    "would reach customers unnoticed")
+              sys.exit(0)
+
+          problems = []
+          for key, expected in checksums.items():
+              url = (downloads.get(key) or "").strip()
+              if not url:
+                  problems.append(f"sha256.{key} has no matching downloads.{key}")
+                  continue
+              if len(expected) != 64 or not all(c in "0123456789abcdef" for c in expected.lower()):
+                  problems.append(f"sha256.{key} is not a sha256 digest")
+                  continue
+
+              digest = hashlib.sha256()
+              try:
+                  with urllib.request.urlopen(url, timeout=120) as response:
+                      for block in iter(lambda: response.read(1024 * 1024), b""):
+                          digest.update(block)
+              except Exception as exc:
+                  problems.append(f"could not download {key}: {type(exc).__name__}")
+                  continue
+
+              actual = digest.hexdigest()
+              if actual != expected.lower():
+                  problems.append(
+                      f"{key} does not match: feed says {expected[:16]}…, "
+                      f"the published file is {actual[:16]}…")
+              else:
+                  print(f"{key}: matches ({actual[:16]}…)")
+
+          # Anything published without a checksum is worth saying out loud.
+          for key, url in downloads.items():
+              if url and key not in checksums:
+                  print(f"::warning file=update.json::downloads.{key} has no "
+                        f"sha256 entry")
+
+          for problem in problems:
+              print(f"::error file=update.json::{problem}")
+          sys.exit(1 if problems else 0)
+          PY
+
       - name: every download URL in update.json resolves
         run: |
           python - <<'PY'
